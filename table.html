@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>TO DO LIST</title>
+
+
+
+
+</head>
+<header>
+<h1 class="lista">View Tasks</h1>
+    <style>
+        .lista {
+    color: white;
+    text-align: center;
+}
+
+    </style>
+
+</header>
+<style>
+    body{
+        background-image: url("/static/2.jpg");
+          background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+    }
+   html,body {
+  height: 50%;
+    margin: 0;
+    padding: 0;
+
+
+   }
+
+</style>
+<br>
+<style>
+table{
+    position: fixed;
+    z-index: 2;
+    left: 50%;
+    top: 20%;
+    transform: translate(-50%, 50%);
+    width: 40%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-radius: 12px 12px 0 0;
+    overflow: hidden;
+    box-shadow:0 2px 12px rgba(32, 32, 32, 3) ;
+    background: none;
+    text-align: center;
+
+
+}
+th, td {
+ padding: 10px 20px;
+    color: white;
+}
+th{
+    background: gold;
+    color: black;
+    text-transform: uppercase;
+
+    font-family: 'Roboto', sans-serif;
+}
+td{
+    font-family: 'Open Sans', sans-serif;
+
+}
+tr:nth-child(odd){
+    background: dimgray;
+}
+</style>
+
+<body>
+
+
+
+ <p id="createlogstable"></p>
+            <script>
+                var loggeddataarray ={{ task_table | safe}}
+                var loggeddataarrayrelevance ={{ task_relevance | safe}}
+                var tasktrue = {{ task_true | safe}}
+
+
+                    function makeloggeddatatable(loggeddataarray, loggeddataarrayrelevance, tasktrue) {
+                        let result = "<table  class=\"table table-hover\"> \n <thead> \n <tr> \n  <th scope=\"row\"></th> \n <th scope=\"row\">Task</th> <th scope=\"row\">Date</th> <th scope=\"row\">Deadline</th>  \n </thead>";
+
+                        for (let i = 0; i < loggeddataarray.length; i++) {
+                            //if(parseInt(tasktrue == 1)){
+                            //result =+"<del>"
+
+                            //}
+
+                            switch (parseInt(loggeddataarrayrelevance[i])) {
+                                case 1:
+                                    result += "<tr id='row_red'>";
+                                    break;
+                                case 2:
+                                    result += "<tr id='row_orange'>";
+                                    break;
+                                case 3:
+                                    result += "<tr id='row_green'>";
+                                    break;
+
+                            }
+
+
+                            result += "<td></td>";
+
+
+                            for (let j = 0; j < loggeddataarray[i].length; j++) {
+
+                                result += "<td>" + loggeddataarray[i][j] + "</td>";
+
+
+                            }
+
+
+                            result += "</tr>";
+
+
+                        }
+                        result += "</table >";
+
+
+                        return result;
+
+
+                    }
+                document.getElementById("createlogstable").innerHTML = makeloggeddatatable(loggeddataarray, loggeddataarrayrelevance, tasktrue)
+
+
+            </script>
+
+
+
+
+
+</body>
+</html>

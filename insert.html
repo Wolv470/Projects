@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/darkly/bootstrap.css">
+    <script src="https://bootswatch.com/_vendor/jquery/dist/jquery.min.js"></script>
+    <script src="https://bootswatch.com/_vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <title>TO DO LIST</title>
+</head>
+
+<br>
+
+<style>
+
+    table tr#row_red {
+        background-color: red;
+        color: white;
+    }
+
+    table tr#row_orange {
+        background-color: orange;
+        color: white;
+    }
+
+    table tr#row_green {
+        background-color: green;
+        color: white;
+    }
+
+
+</style>
+<body>
+
+
+<center>
+    <h1>Insert task</h1>
+    <div class="card text-white bg-secondary mb-3" style="max-width: 50rem;">
+        <div class="card-body">
+
+
+            <form action="" method="POST">
+
+
+                <label class="nume" for="dname">Insert task here:</label>
+                <br>
+                <input type="text" name="lname">
+                <br>
+                <br>
+                <label>Importance task:</label>
+                <br>
+
+                <select name="selectare_importanta">
+                    <option value="1">Foarte important</option>
+                    <option value="2">Important</option>
+                    <option value="3">Putin important</option>
+
+                </select>
+                <br>
+                <br>
+                <label for="birthdaytime">Dates:</label>
+                <br>
+                <input type="datetime-local" step="1" id="meeting-time"
+                       name="meeting-time">
+                <br>
+                <br>
+                <label  > Deadline/Repeate task </label>
+                <br>
+                <select name="dead_line_repeat">
+                    <option value="1">Deadline</option>
+                    <option value="2">Repeat every day</option>
+                    <option value="3">Repeat every week</option>
+                    <option value="4">Repeat every month</option>
+                    <option value="5">Repeat every year</option>
+
+                </select>
+                <br>
+                <br>
+
+
+                <br>
+                <br>
+
+                <input type="submit" name="action" value="Submit">
+                <br>
+                <br>
+
+
+                <div class="card-body">
+                    <p id="createlogstable"></p>
+
+                    <input type="submit" name="action" value="Delete">
+
+                </div>
+
+
+            </form>
+
+
+            <script>
+                var loggeddataarray ={{ task_table | safe}}
+                var loggeddataarrayrelevance ={{ task_relevance | safe}}
+                var tasktrue = {{ task_true | safe}}
+
+
+                    function makeloggeddatatable(loggeddataarray, loggeddataarrayrelevance, tasktrue) {
+                        let result = "<table  class=\"table table-hover\"> \n <thead> \n <tr> \n  <th scope=\"row\"></th> \n <th scope=\"row\">Tasks</th> <th scope=\"row\">Date</th> <th scope=\"row\">Deadline/Repeat tasks</th>  \n </thead>";
+
+                        for (let i = 0; i < loggeddataarray.length; i++) {
+                            //if(parseInt(tasktrue == 1)){
+                            //result =+"<del>"
+
+                            //}
+
+                            switch (parseInt(loggeddataarrayrelevance[i])) {
+                                case 1:
+                                    result += "<tr id='row_red'>";
+                                    break;
+                                case 2:
+                                    result += "<tr id='row_orange'>";
+                                    break;
+                                case 3:
+                                    result += "<tr id='row_green'>";
+                                    break;
+
+                            }
+
+
+                            result += "<td> <input type=checkbox  name=options value = " + i + "></td>";
+
+
+                            for (let j = 0; j < loggeddataarray[i].length; j++) {
+
+                                result += "<td>" + loggeddataarray[i][j] + "</td>";
+
+
+                            }
+
+
+                            result += "</tr>";
+
+
+                        }
+                        result += "</table >";
+
+
+                        return result;
+
+
+                    }
+                document.getElementById("createlogstable").innerHTML = makeloggeddatatable(loggeddataarray, loggeddataarrayrelevance, tasktrue)
+
+
+            </script>
+
+
+</center>
+
+</div>
+
+</div>
+
+</body>
+</html>
